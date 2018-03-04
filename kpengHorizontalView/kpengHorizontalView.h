@@ -21,5 +21,6 @@
 
 @property (nonatomic,copy) void(^itemClickCallBack)(NSInteger itemIndex,NSString*title);
 
+@property (nonatomic,assign) NSInteger localIndex;
 
 @end

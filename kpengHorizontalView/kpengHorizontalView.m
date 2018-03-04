@@ -75,7 +75,16 @@
     
 }
 
-
+-(void)setLocalIndex:(NSInteger)localIndex {
+    [_localBtnListArr enumerateObjectsUsingBlock:^(UIButton * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (idx ==localIndex) {
+            [obj setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+            obj.titleLabel.font =[UIFont systemFontOfSize:15];
+        }
+    }];
+   
+    _line.frame =CGRectMake(self.frame.size.width/6*localIndex, self.frame.size.height-1, self.frame.size.width/6, 1);
+}
 
 
 
