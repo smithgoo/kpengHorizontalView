@@ -10,6 +10,9 @@
 @interface kpengHorizontalView ()
 @property (nonatomic,strong) UIView *line;
 @property (nonatomic,strong) UIButton *btn;
+@property (nonatomic,strong) NSArray *localListArr;
+@property (nonatomic,strong) NSMutableArray <UIButton*>*localBtnListArr;
+
 @end
 @implementation kpengHorizontalView
 
@@ -70,7 +73,7 @@
         _btn =[UIButton new];
         [_btn setTitle:[NSString stringWithFormat:@"%@",_localListArr[index]] forState:UIControlStateNormal];
         _btn.titleLabel.textAlignment =NSTextAlignmentCenter;
-        _btn.titleLabel.font =[UIFont systemFontOfSize:14];
+        _btn.titleLabel.font =_nomalFont?_nomalFont:[UIFont systemFontOfSize:14];
       
         BF =BF +[self calculateRowWidth:_localListArr[index]];
         if ((TW +15*_localListArr.count)<self.frame.size.width) {
@@ -91,7 +94,7 @@
     }
     _line =[UIView new];
     [self addSubview:_line];
-    _line.backgroundColor =[UIColor redColor];
+    _line.backgroundColor =_selectedColor?_selectedColor:[UIColor redColor];
     if ((TW +15*_localListArr.count)<self.frame.size.width) {
         _line.frame =CGRectMake(0, frame.size.height-1, self.frame.size.width/_localListArr.count, 1);
 
@@ -104,10 +107,10 @@
 - (void)btnHitAction:(UIButton*)sender {
     [_localBtnListArr enumerateObjectsUsingBlock:^(UIButton * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         [obj setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        obj.titleLabel.font =[UIFont systemFontOfSize:14];
+        obj.titleLabel.font =_nomalFont?_nomalFont:[UIFont systemFontOfSize:14];
     }];
-    [sender setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-    sender.titleLabel.font =[UIFont boldSystemFontOfSize:15];
+    [sender setTitleColor:_selectedColor?_selectedColor:[UIColor redColor] forState:UIControlStateNormal];
+    sender.titleLabel.font =_selectedFont?_selectedFont:[UIFont boldSystemFontOfSize:15];
     [UIView animateWithDuration:0.25 animations:^{
         _line.frame =CGRectMake(CGRectGetMaxX(sender.frame)-sender.frame.size.width, self.frame.size.height-1, sender.frame.size.width, 1);
 
@@ -124,8 +127,8 @@
     [_localBtnListArr enumerateObjectsUsingBlock:^(UIButton * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         BF =BF +[self calculateRowWidth:_localListArr[idx]];
         if (idx ==localIndex) {
-            [obj setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
-            obj.titleLabel.font =[UIFont boldSystemFontOfSize:15];
+            [obj setTitleColor:_selectedColor?_selectedColor:[UIColor redColor] forState:UIControlStateNormal];
+            obj.titleLabel.font =_selectedFont?_selectedFont:[UIFont boldSystemFontOfSize:15];
             *stop =YES;
         }
     }];
@@ -140,6 +143,27 @@
     } else {
     _line.frame =CGRectMake(BF-[self calculateRowWidth:_localListArr[localIndex]]+localIndex*15, self.frame.size.height-1, [self calculateRowWidth:_localListArr[localIndex]], 1);
     }
+}
+
+
+
+-(void)setSelectedColor:(UIColor *)selectedColor {
+    _selectedColor =selectedColor;
+}
+
+
+-(void)setLineColor:(UIColor *)lineColor {
+    _line.backgroundColor =lineColor;
+    
+}
+
+-(void)setNomalFont:(UIFont *)nomalFont {
+    
+    _nomalFont = nomalFont;
+}
+
+- (void)setSelectedFont:(UIFont *)selectedFont {
+    _selectedFont = selectedFont;
 }
 
 @end
