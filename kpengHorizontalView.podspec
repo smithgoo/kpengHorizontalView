@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
 s.name         = "kpengHorizontalView"
-s.version      = "0.0.1"
+s.version      = "0.0.2"
 s.summary      = "类似网易严选的横着的筛选控件，类似hgsegment 扩展持续中
 ."
 s.description      = <<-DESC
